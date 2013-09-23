@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <meta charset="utf-8" />
+
+        <title>PostgreSQL</title>
+
+        <link href="css/impress.css" rel="stylesheet"/>
+        <link href="css/prettify.css" rel="stylesheet"/>
+        <link href="css/animation.css" rel="stylesheet"/>
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jmpress.impress.js"></script>
+        <script src="js/prettify.js"></script>
+
+    </head>
+
+    <body>
+        <div id="impress">
+            <div class="step slide" style="text-align: center;">
+                <img src="img/TopDogLogo1.png" alt="TopDog Development ltd" style="margin-top: 200px;"/>
+            </div>
+
+            <div class="step slide" data-x="1500" style="text-align: center;">
+                <h1>Строим слонов</h1>
+                <h4>или наследование таблиц в PostgreSQL</h2>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <small style="font-size:14pt;">Докладчик - Андрей Свириденко<br><a href="mailto:asv@topdog.ru.net">asv@topdog.ru.net</a></small><br>
+                <small style="font-size:10pt;">Подельник - Евгений Бабихин<br><a href="mailto:eb@topdog.ru.net">eb@topdog.ru.net</a></small>
+            </div>
+
+            <div class="step" data-x="3000">
+                <h2>О чем это мы?</h2>
+                <ul data-jmpress="fade">
+                    <li>Как создавать?</li>
+                    <li>Как выбирать?</li>
+                    <li>Как наполянть?</li>
+                </ul>
+                <small class="remark" data-jmpress="fade">Я это могу прочитать и в доке!</small>
+                <ul data-jmpress="fade">
+                    <li>Пара слов о предметной областе</li>
+                    <li>Пример исходных данных</li>
+                    <li>Как мы все сделали</li>
+                    <li>На какие грабли напоролись</li>
+                </ul>
+
+            </div>
+
+            <div class="step" data-x="3000" data-y="1000">
+                <h2>Начнем с малого и создадим родительскую таблицу</h2>
+                <pre class="mono prettyprint lang-sql" data-jmpress="fade">
+CREATE TABLE cities (
+    name            text,
+    population      float,  -- население
+    altitude        int     -- высота
+);
+</pre>
+                <div data-jmpress="fade">
+                    <small class="remark">И дочернюю</small>
+                    <pre class="mono prettyprint lang-sql">
+CREATE TABLE capitals (
+    state           char(2)
+) INHERITS (cities);
+</pre>          </div>      
+            </div>
+
+            <div class="step" data-x="3000" data-y="1600">
+                <h2>Можно пойти иным путем</h2>
+                <pre class="mono prettyprint lang-sql">
+CREATE TABLE cities (
+    name            text,
+    population      float,  -- население
+    altitude        int     -- высота
+);
+CREATE TABLE capitals like cities;
+ALTER TABLE capitals ADD COLUMN  state char(2);
+ALTER TABLE capitals INHERIT cities;
+</pre>
+            </div>
+
+            <div class="step" data-x="3000" data-y="2400">
+                <h2>А как же выбрать что-то?</h2>
+                <div>
+                    <h4> Выбираем только из таблицы cities, не трогаем capitals</h4>
+                    <pre class="mono prettyprint lang-sql">SELECT * FROM <b>only</b> cities;</pre>
+                </div>
+                <div data-jmpress="fade">
+                    <h4> Выбираем из всей иерархии</h4>
+                    <pre class="mono prettyprint lang-sql">SELECT * FROM cities<b>*</b>;</pre>
+                 <small class="remark">'*' - указывать необязательно, это поведение по умолчанию (можно изменить, настройка: sql_inheritance)</small>
+                </div>
+            </div>
+
+            <div class="step" data-x="3000" data-y="3200">
+               <h2>Как же вставить хоть что-то или покой нам только снится?</h2>
+               <h4>Нет автоматической диспетчеризации данных в иерархию, все ручками или...</h4>
+               <h4 data-jmpress="fade">Перенаправление запросов с помощью специальных правил (применимо, только если колонки совпадают, иначе вставка свалится на этапе валидации колонок)</h4>
+            </div>
+
+            <div class="step" data-x="4500">
+                <h2>Целостность данных</h2>
+                <h4>Все вычисляемые и non-null автоматически наследуются дочерними таблицами</h4>
+                <h4>Другие ограничения (уникальность, первичные и внешние ключи) не наследуются => потенциальная проблема</h4>
+            </div>
+
+            <div class="step" data-x="4500" data-y="800">
+                <center><img src="img/are_you_fucking_kidding_me.jpg"/></center>
+            </div>
+
+            <div class="step" data-x="4500" data-y="1600">
+                <h2>Может перейдем к делу?...Что? Кто такие саплаеры?</h2>
+                <small class="remark">Это поставщики каких-либо услуг</small><br>
+                <center><div data-jmpress="fade">
+                    <img src="img/suppliers/cosmos.jpg"/>
+                    <img src="img/suppliers/just_sunshine.gif"/>
+                    <img src="img/suppliers/olympic.jpg"/>
+                    <br>
+                    <img src="img/suppliers/thomas_cook.jpg"/>
+                    <img src="img/suppliers/thomson.png"/>
+                </div></center>
+            </div>
+
+            <div class="step" data-x="4500" data-y="2400">
+                <h2>И что же они нам поставляют?</h2>
+                <small class="mono" >
+                    TRV+1+40+LASMAN5AMANLAS+MAN+LAS+20141024:1115:7::20141024:1355'<br>
+                    TSD+:TCX724'<br>
+                    TRV+2+40+LASMAN5ALASMAN+LAS+MAN+20141031:1645:0::20141101:0945'<br>
+                    TSD+:TCX725'<br>
+                    ACC+1+Bellagio:UK0H17+::Las Vegas++5+RO+:::0'<br>
+                    PRC+A:116933:4*A:121800:3*A:131532:2*A:190605:1*C:111800:1*C:111800:2:16*I:5900+9+9::ROOM08:<br>Resort Deluxe Room+1:4::::2:N:++RO++12:9917:AD'<br>
+                    PRC+A:165256:3*A:191963:2*A:309430:1*C:174100:1:16*I:5900+9+9::SUIT06:Bellagio Suite+1:3::::2:N:++RO++12:11411:AD'<br>
+                    ACC+1+Bellagio Lake Vw Rms:UK0H33+::Las Vegas++5+RO+:::0'<br>
+                    PRC+A:131435:4*A:139130:3*A:154521:2*A:233285:1*C:116300:1*C:116300:2:16*I:5900+9+9::ROOM11:<br>Deluxe Fountain View Room+1:4::::2:N:++RO++12:8665:AD'
+                </small>
+            </div>
+
+            <div class="step" data-x="4500" data-y="3200">
+                <h2>И что же они нам поставляют?</h2>
+                <small class="mono" >
+                    TRV+1+40+LASMAN5AMANLAS+<b class="warn">MAN</b>+<b class="warn">LAS</b>+<b class="warn">20141024:1115</b>:<b class="warn">7</b>::<b class="warn">20141024:1355'</b><br>
+                    TSD+:TCX724'<br>
+                    TRV+2+40+LASMAN5ALASMAN+<b class="warn">LAS</b>+<b class="warn">MAN</b>+<b class="warn">20141031:1645</b>:<b class="warn">0</b>::<b class="warn">20141101:0945</b>'<br>
+                    TSD+:TCX725'<br>
+                    ACC+1+Bellagio:UK0H17+::<b class="warn">Las Vegas</b>++<b class="warn">5+RO</b>+:::0'<br><br>
+                    PRC+A:116933:4*A:121800:3*A:131532:2*A:190605:1*C:111800:1*C:111800:2:16*I:5900+9+9::<br>ROOM08:Resort Deluxe Room+1:4::::2:N:++RO++12:9917:AD'<br>
+                    PRC+A:165256:3*A:191963:2*A:309430:1*C:174100:1:16*I:5900+9+9::SUIT06:Bellagio Suite+1:3::::2:N:++RO++12:11411:AD'<br>
+                    ACC+1+Bellagio Lake Vw Rms:UK0H33+::Las Vegas++5+RO+:::0'<br>
+                    PRC+A:131435:4*A:139130:3*A:154521:2*A:233285:1*C:116300:1*C:116300:2:16*I:5900+9+9::<br>ROOM11:Deluxe Fountain View Room+1:4::::2:N:++RO++12:8665:AD'
+                </small>
+            </div>
+
+            <div class="step" data-x="4500" data-y="3600">
+                <h2>А размер всего этого безобразия?</h2>
+                <h4>Средний размер файла 1GB</h4>
+                <h4 data-jmpress="fade">Текущий размер базы 70GB</h4>
+                <h4 data-jmpress="fade">Данные должны обновлятся раз в 4 часа</h4>
+                <h3 class="success" data-jmpress="fade">Не так уж и мало!</h3>
+            </div>
+
+            <div class="step" data-x="4500" data-y="4300">
+                <h2>Вначале было Слово!</h2>
+                <h4 >Изначально, архитектура выглядила примерно вот так...</h4>
+                <center>
+                    <img data-jmpress="fade" src="img/first_architecture.jpg"/>
+                </center>
+                <h4 data-jmpress="fade">И однажды она не выдержила...</h4>
+            </div>
+
+            <div class="step" data-x="4500" data-y="4300" data-rotate-y="90">
+                <h2 class="success">Возникла идея!</h2><!--Каждый клиент использует свой набор саплаеров!-->
+                <div data-jmpress="fade">
+                    <h4>И новая архитектура стала выглядить примерно вот так...</h4>
+                     <center>
+                        <img src="img/new_architecture.png"/>
+                    </center>
+                 </div>
+
+            </div>
+
+            <div class="step" data-x="4500" data-y="4300" data-rotate-y="90" data-z="-1100">
+                <h2>Как это работает?</h2>
+                <div data-jmpress="fade">
+                <small class="remark">Создаем таблицу</small>
+                <pre class="mono prettyprint lang-sql" >CREATE TABLE newTableName (like parentTable);</pre></div>
+
+                <div data-jmpress="fade"> <small  class="remark">Разбираем файл</small><br><br></div>
+
+                <div data-jmpress="fade">
+                    <small class="remark">Добавляем индексы, ограничения и анализ</small>
+                    <pre class="mono prettyprint lang-sql" >
+CREATE INDEX ...;
+ALTER TABLE newTableName ADD CONSTRAINT newTableName_constraint  
+CHECK ( suppliercode = 'supplierСode');
+ANALYZE newTableName;</pre>
+                <small class="fail">Запомним это ограничение!</small>
+                </div>
+            </div>
+
+            <div class="step" data-x="4500" data-y="4300" data-rotate-y="90" data-z="-2200">
+                <h2>Как это работает?</h2>
+                <div data-jmpress="fade">
+                    <small class="remark">Ищем уже существующую таблицу того же сапалера</small>
+                    <pre class="mono prettyprint lang-sql" >SELECT c.relname AS child 
+FROM  pg_inherits 
+JOIN pg_class AS c ON (inhrelid=c.oid) 
+JOIN pg_class as p ON (inhparent=p.oid) 
+WHERE 
+    p.relname = parentTableName AND 
+    c.relname ilike '%childTableNameTemplate%' 
+    ESCAPE '$';</pre></div>
+            <div data-jmpress="fade">
+                <small class="remark">В одной транзакции убираем старую таблицу из иерархии наследования и добавляем новую</small>
+                <pre class="mono prettyprint lang-sql" >
+BEGIN; 
+LOCK TABLE parentTable;
+ALTER TABLE oldTablename NO INHERIT parentTable;
+ALTER TABLE newTableName INHERIT parentTable;
+COMMIT;
+</pre></div>
+
+            </div>
+
+            <div class="step" data-x="4500" data-y="4900">
+                <h2>И как это поможет?</h2>
+                <div data-jmpress="fade">
+                    <small class="remark">Посмотрим на план выполнения запроса</small>
+                    <pre class="mono prettyprint lang-sql" >SELECT * FROM downloadedflight where suppliercode in ('COSMOSF', 'JMC')</pre>
+                </div>
+                <center data-jmpress="fade">
+                    <img src="img/execution_plan.png"/>
+                </center>
+                <h3 class="success" data-jmpress="fade">Profit!</h3>
+            </div>
+
+            <div class="step" data-x="4500" data-y="5700">
+                <h2>Кроме того</h2>
+                <ul >
+                    <li data-jmpress="fade">Не нужны блокировки при вставке новых записей</li>
+                    <li data-jmpress="fade">Вставка производится в таблицы, у которых нет индексов и ограничений</li>
+                    <li data-jmpress="fade">Используем PostgreSQL COPY API</li>
+                    <li data-jmpress="fade">Таблицы не зависят друг от друга => параллельная вставка</li>
+                    <li data-jmpress="fade">Изменения в иерархии происходят мгновенно</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="4500" data-y="6800">
+                <h2>Пара слов о PostgreSQL COPY API</h2>
+                <ul >
+                    <li data-jmpress="fade">Предназначено для вставки больших объемов данных</li>
+                    <li data-jmpress="fade">В любом случае работает быстрее, чем INSERT</li>
+                    <li data-jmpress="fade">Требует анализа таблицы после вставки</li>
+                    <li data-jmpress="fade">Добавляются новые возможности (COPY FREEZE)</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="6000">
+                <h2>Меня можно спросить о:</h2>
+                    <table class="before-after">
+                    <tr>
+                        <td><img width="250" height="200" src="img/weather.jpg"/></td>
+                        <td style="border-left: solid grey 5px;">Погоде</td>
+                        <td><img width="250" height="200" src="img/elephant.jpg"/></td>
+                        <td>PostgreSQL</td>
+                    </tr>
+                    <tr>
+                        <td><img width="250" height="200" src="img/politic.jpg"/></td>
+                        <td style="border-left: solid grey 5px;">Политике</td>
+                        <td><img width="250" height="200" src="img/somethingelse.jpg"/></td>
+                        <td>И так далее</td>
+                    </tr>
+                    <tr>
+                        <td><img width="250" height="200" src="img/girl.jpg"/></td>
+                        <td>Девочках</td>
+                    </tr>
+                    <tr>
+
+                    </tr>
+                </table>
+            </div>
+
+            <div class="step" id="try-me" data-x="1100" data-y="1600">
+                <h2>Снова посмотреть презентацию</h2>
+                <p><a href="{$Ref_to_presentation}">{$Ref_to_presentation}</a><br/>
+                    <small class="remark">Точно работает в Google Chrome последних версий :)</small>
+                </p>
+            </div>
+
+            <div id="overview" class="step" data-x="3000" data-y="1500" data-scale="10"></div>
+        </div>
+
+        <script type="text/javascript">
+            $(function() {
+                    $('#impress').jmpress({
+                        "mouse": { clickSelects: false },
+                        "beforeChange": function(element, eventData) {
+                            element = $(element);
+                            if(element.is('tr')) {
+                                element.addClass('visited'); // code should not be hidden after visiting
+                            }
+                        }
+                    });
+            });
+
+            prettyPrint();
+        </script>
+    </body>
+</html>
+
+
+
+
