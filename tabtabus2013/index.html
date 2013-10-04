@@ -30,7 +30,7 @@
                 <br/>
                 <br/>
                 <small style="font-size:14pt;">Докладчик - Андрей Свириденко<br><a href="mailto:asv@topdog.ru.net">asv@topdog.ru.net</a></small><br>
-                <small style="font-size:10pt;">Подельник - Евгений Бабихин<br><a href="mailto:eb@topdog.ru.net">eb@topdog.ru.net</a></small>
+                <small style="font-size:10pt;">Подельник - Евгений Бабихин<br><a href="mailto:ebabikhin@topdog.ru.net">ebabikhin@topdog.ru.net</a></small>
             </div>
 
             <div class="step" data-x="3000">
@@ -40,9 +40,9 @@
                     <li>Как выбирать?</li>
                     <li>Как наполянть?</li>
                 </ul>
-                <small class="remark" data-jmpress="fade">Я это могу прочитать и в доке!</small>
+                <small class="remark" data-jmpress="fade">Я это могу прочитать и в доке! (можно сходить и выпить кофе :)</small>
                 <ul data-jmpress="fade">
-                    <li>Пара слов о предметной областе</li>
+                    <li>Пара слов о предметной области</li>
                     <li>Пример исходных данных</li>
                     <li>Как мы все сделали</li>
                     <li>На какие грабли напоролись</li>
@@ -112,7 +112,7 @@ ALTER TABLE capitals INHERIT cities;
             </div>
 
             <div class="step" data-x="4500" data-y="1600">
-                <h2>Может перейдем к делу?...Что? Кто такие саплаеры?</h2>
+                <h2>Может перейдем к делу?...Что? Кто такие операторы?</h2>
                 <small class="remark">Это поставщики каких-либо услуг</small><br>
                 <center><div data-jmpress="fade">
                     <img src="img/suppliers/cosmos.jpg"/>
@@ -157,7 +157,7 @@ ALTER TABLE capitals INHERIT cities;
             <div class="step" data-x="4500" data-y="3600">
                 <h2>А размер всего этого безобразия?</h2>
                 <h4>Средний размер файла 1GB</h4>
-                <h4 data-jmpress="fade">Текущий размер базы 70GB</h4>
+                <h4 data-jmpress="fade">Текущий размер базы 80GB</h4>
                 <h4 data-jmpress="fade">Данные должны обновлятся раз в 4 часа</h4>
                 <h3 class="success" data-jmpress="fade">Не так уж и мало!</h3>
             </div>
@@ -168,11 +168,11 @@ ALTER TABLE capitals INHERIT cities;
                 <center>
                     <img data-jmpress="fade" src="img/first_architecture.jpg"/>
                 </center>
-                <h4 data-jmpress="fade">И однажды она не выдержила...</h4>
+                <h4 data-jmpress="fade">И однажды она не выдержала...</h4>
             </div>
 
             <div class="step" data-x="4500" data-y="4300" data-rotate-y="90">
-                <h2 class="success">Возникла идея!</h2><!--Каждый клиент использует свой набор саплаеров!-->
+                <h2 class="success">Возникла идея!</h2><!--Каждый клиент использует свой набор операторов!-->
                 <div data-jmpress="fade">
                     <h4>И новая архитектура стала выглядить примерно вот так...</h4>
                      <center>
@@ -204,7 +204,7 @@ ANALYZE newTableName;</pre>
             <div class="step" data-x="4500" data-y="4300" data-rotate-y="90" data-z="-2200">
                 <h2>Как это работает?</h2>
                 <div data-jmpress="fade">
-                    <small class="remark">Ищем уже существующую таблицу того же сапалера</small>
+                    <small class="remark">Ищем уже существующую таблицу того же оператора</small>
                     <pre class="mono prettyprint lang-sql" >SELECT c.relname AS child 
 FROM  pg_inherits 
 JOIN pg_class AS c ON (inhrelid=c.oid) 
@@ -285,8 +285,9 @@ COMMIT;
 
             <div class="step" id="again" data-x="1100" data-y="1600">
                 <h2>Снова посмотреть презентацию</h2>
-                <p><a href="http://putpixel.github.io/presentation/tabtabus2013/">http://putpixel.github.io/presentation/tabtabus2013<br>http://bit.ly/15kKzs0</a><br/>
-                    <small class="remark">Точно работает в Google Chrome последних версий :)</small>
+                <p><a href="http://putpixel.github.io/presentation/tabtabus2013/">http://putpixel.github.io/presentation/tabtabus2013</a><br>
+                    <a href="http://bit.ly/15kKzs0">или http://bit.ly/15kKzs0</a><br/>
+                    <small class="remark">Точно работает в Google Chrome и FireFox последних версий :)</small>
                 </p>
             </div>
 
