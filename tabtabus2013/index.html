@@ -50,7 +50,17 @@
 
             </div>
 
-            <div class="step" data-x="3000" data-y="1000">
+            <div class="step" data-x="3000" data-y="800">
+                <h2>Пример</h2>
+                 <ul >
+                    <li>Модель данных для городов</li>
+                    <li data-jmpress="fade">В каждом штате есть несколько городов</li>
+                    <li data-jmpress="fade">В штатe только одна столица</li>
+                    <li data-jmpress="fade">Хотим возможность быстрого нахождения города-столицы</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="3000" data-y="1600">
                 <h2>Начнем с малого и создадим родительскую таблицу</h2>
                 <pre class="mono prettyprint lang-sql" data-jmpress="fade">
 CREATE TABLE cities (
@@ -68,7 +78,7 @@ CREATE TABLE capitals (
 </pre>          </div>      
             </div>
 
-            <div class="step" data-x="3000" data-y="1600">
+            <div class="step" data-x="3000" data-y="2400">
                 <h2>Можно пойти иным путем</h2>
                 <pre class="mono prettyprint lang-sql">
 CREATE TABLE cities (
@@ -82,7 +92,7 @@ ALTER TABLE capitals INHERIT cities;
 </pre>
             </div>
 
-            <div class="step" data-x="3000" data-y="2400">
+            <div class="step" data-x="3000" data-y="3200">
                 <h2>А как же выбрать что-то?</h2>
                 <div>
                     <h4> Выбираем только из таблицы cities, не трогаем capitals</h4>
@@ -95,7 +105,7 @@ ALTER TABLE capitals INHERIT cities;
                 </div>
             </div>
 
-            <div class="step" data-x="3000" data-y="3200">
+            <div class="step" data-x="3000" data-y="4000">
                <h2>Как же вставить хоть что-то или покой нам только снится?</h2>
                <h4>Нет автоматической диспетчеризации данных в иерархию, все ручками или...</h4>
                <h4 data-jmpress="fade">Перенаправление запросов с помощью специальных правил (применимо, только если колонки совпадают, иначе вставка свалится на этапе валидации колонок)</h4>
@@ -240,18 +250,18 @@ COMMIT;
             <div class="step" data-x="4500" data-y="5700">
                 <h2>Кроме того</h2>
                 <ul >
-                    <li data-jmpress="fade">Не нужны блокировки при вставке новых записей</li>
+                    <li >Не нужны блокировки при вставке новых записей</li>
                     <li data-jmpress="fade">Вставка производится в таблицы, у которых нет индексов и ограничений</li>
                     <li data-jmpress="fade">Используем PostgreSQL COPY API</li>
                     <li data-jmpress="fade">Таблицы не зависят друг от друга => параллельная вставка</li>
-                    <li data-jmpress="fade">Изменения в иерархии происходят мгновенно</li>
+                    <li data-jmpress="fade">Изменения в иерархии происходят мгновенно (<b  class="fail">не нужно удалять старые записи!</b>)</li>
                 </ul>
             </div>
 
             <div class="step" data-x="4500" data-y="6800">
                 <h2>Пара слов о PostgreSQL COPY API</h2>
                 <ul >
-                    <li data-jmpress="fade">Предназначено для вставки больших объемов данных</li>
+                    <li >Предназначено для вставки больших объемов данных</li>
                     <li data-jmpress="fade">В любом случае работает быстрее, чем INSERT</li>
                     <li data-jmpress="fade">Требует анализа таблицы после вставки</li>
                     <li data-jmpress="fade">Добавляются новые возможности (COPY FREEZE)</li>
