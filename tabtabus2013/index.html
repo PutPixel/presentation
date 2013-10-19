@@ -17,16 +17,10 @@
 
     <body>
         <div id="impress">
-            <div class="step slide" style="text-align: center;">
-                <img src="img/TopDogLogo1.png" alt="TopDog Development ltd" style="margin-top: 200px;"/>
-            </div>
 
             <div class="step slide" data-x="1500" style="text-align: center;">
-                <h1>Строим слонов</h1>
-                <h4>или наследование таблиц в PostgreSQL</h2>
-                <br/>
-                <br/>
-                <br/>
+                <h1>Строим слонов</h1><h4>или наследование таблиц в PostgreSQL</h2>
+                <img src="img/TopDogLogo1.png" alt="TopDog Development ltd" style="margin-top: 50px;"/>
                 <br/>
                 <br/>
                 <small style="font-size:14pt;">Докладчик - Андрей Свириденко<br><a href="mailto:asv@topdog.ru.net">asv@topdog.ru.net</a></small><br>
@@ -35,94 +29,34 @@
 
             <div class="step" data-x="3000">
                 <h2>О чем это мы?</h2>
-                <ul data-jmpress="fade">
-                    <li>Как создавать?</li>
-                    <li>Как выбирать?</li>
-                    <li>Как наполянть?</li>
+                <ul>
+                    <li>Типичная задача</li>
+                    <li data-jmpress="fade">Пара слов о предметной области</li>
+                    <li data-jmpress="fade">Пример исходных данных</li>
+                    <li data-jmpress="fade">Как мы все сделали</li>
+                    <li data-jmpress="fade">На какие грабли напоролись</li>
                 </ul>
-                <small class="remark" data-jmpress="fade">Я это могу прочитать и в доке! (можно сходить и выпить кофе :)</small>
-                <ul data-jmpress="fade">
-                    <li>Пара слов о предметной области</li>
-                    <li>Пример исходных данных</li>
-                    <li>Как мы все сделали</li>
-                    <li>На какие грабли напоролись</li>
-                </ul>
-
             </div>
 
             <div class="step" data-x="3000" data-y="800">
-                <h2>Пример</h2>
-                 <ul >
-                    <li>Модель данных для городов</li>
-                    <li data-jmpress="fade">В каждом штате есть несколько городов</li>
-                    <li data-jmpress="fade">В штатe только одна столица</li>
-                    <li data-jmpress="fade">Хотим возможность быстрого нахождения города-столицы</li>
-                </ul>
+                <center><h2>Формулировка задачи</h2>
+                <img src="img/socket.jpg"/><br>
+                <small class="remark">Обычно выглядит примерно так...</small></center>
             </div>
 
             <div class="step" data-x="3000" data-y="1600">
-                <h2>Начнем с малого и создадим родительскую таблицу</h2>
-                <pre class="mono prettyprint lang-sql" data-jmpress="fade">
-CREATE TABLE cities (
-    name            text,
-    population      float,  -- население
-    altitude        int     -- высота
-);
-</pre>
-                <div data-jmpress="fade">
-                    <small class="remark">И дочернюю</small>
-                    <pre class="mono prettyprint lang-sql">
-CREATE TABLE capitals (
-    state           char(2)
-) INHERITS (cities);
-</pre>          </div>      
-            </div>
-
-            <div class="step" data-x="3000" data-y="2400">
-                <h2>Можно пойти иным путем</h2>
-                <pre class="mono prettyprint lang-sql">
-CREATE TABLE cities (
-    name            text,
-    population      float,  -- население
-    altitude        int     -- высота
-);
-CREATE TABLE capitals like cities;
-ALTER TABLE capitals ADD COLUMN  state char(2);
-ALTER TABLE capitals INHERIT cities;
-</pre>
-            </div>
-
-            <div class="step" data-x="3000" data-y="3200">
-                <h2>А как же выбрать что-то?</h2>
-                <div>
-                    <h4> Выбираем только из таблицы cities, не трогаем capitals</h4>
-                    <pre class="mono prettyprint lang-sql">SELECT * FROM <b>only</b> cities;</pre>
-                </div>
-                <div data-jmpress="fade">
-                    <h4> Выбираем из всей иерархии</h4>
-                    <pre class="mono prettyprint lang-sql">SELECT * FROM cities<b>*</b>;</pre>
-                 <small class="remark">'*' - указывать необязательно, это поведение по умолчанию (можно изменить, настройка: sql_inheritance)</small>
-                </div>
-            </div>
-
-            <div class="step" data-x="3000" data-y="4000">
-               <h2>Как же вставить хоть что-то или покой нам только снится?</h2>
-               <h4>Нет автоматической диспетчеризации данных в иерархию, все ручками или...</h4>
-               <h4 data-jmpress="fade">Перенаправление запросов с помощью специальных правил (применимо, только если колонки совпадают, иначе вставка свалится на этапе валидации колонок)</h4>
-            </div>
-
-            <div class="step" data-x="4500">
-                <h2>Целостность данных</h2>
-                <h4>Все вычисляемые и non-null автоматически наследуются дочерними таблицами</h4>
-                <h4>Другие ограничения (уникальность, первичные и внешние ключи) не наследуются => потенциальная проблема</h4>
-            </div>
-
-            <div class="step" data-x="4500" data-y="800">
-                <center><img src="img/are_you_fucking_kidding_me.jpg"/></center>
+                <h2>Простым языком</h2>
+                <ul>
+                    <li>Есть источник данных</li>
+                    <li data-jmpress="fade">Наш клиент который хочет поиск по этим данным</li>
+                    <li data-jmpress="fade">...</li>
+                    <li data-jmpress="fade">И мы...</li>
+                </ul>
+                <b  data-jmpress="fade" class="fail">Проблема клиента - наша проблема!</b>
             </div>
 
             <div class="step" data-x="4500" data-y="1600">
-                <h2>Может перейдем к делу?...Что? Кто такие операторы?</h2>
+                <h2>Ближе к телу! Кто такие тур операторы?</h2>
                 <small class="remark">Это поставщики каких-либо услуг</small><br>
                 <center><div data-jmpress="fade">
                     <img src="img/suppliers/cosmos.jpg"/>
@@ -172,16 +106,26 @@ ALTER TABLE capitals INHERIT cities;
                 <h3 class="success" data-jmpress="fade">Не так уж и мало!</h3>
             </div>
 
-            <div class="step" data-x="4500" data-y="4300">
-                <h2>Вначале было Слово!</h2>
-                <h4 >Изначально, архитектура выглядила примерно вот так...</h4>
-                <center>
-                    <img data-jmpress="fade" src="img/first_architecture.jpg"/>
-                </center>
-                <h4 data-jmpress="fade">И однажды она не выдержала...</h4>
+            <div class="step" data-x="4500" data-y="3600" data-rotate-y="90">
+                <h2>Почему бы не использовать вэб-сервисы?</h2>
+                 <ul>
+                    <li class="fail">Дорого</li>
+                    <li class="fail" data-jmpress="fade">Медленно</li>
+                    <li class="fail" data-jmpress="fade">А иногда и нет...</li>
+                 </ul>
             </div>
 
-            <div class="step" data-x="4500" data-y="4300" data-rotate-y="90">
+            <div class="step" data-x="6000" data-y="0">
+                <h2>Вначале было Слово!</h2>
+                <h4 >Изначально, архитектура выглядила примерно вот так...</h4>
+                <div data-jmpress="fade">
+                <center>
+                    <img  src="img/first_architecture.jpg"/>
+                </center>
+                <h4>И однажды она не выдержала...</h4></div>
+            </div>
+
+            <div class="step" data-x="6000" data-y="800">
                 <h2 class="success">Возникла идея!</h2><!--Каждый клиент использует свой набор операторов!-->
                 <div data-jmpress="fade">
                     <h4>И новая архитектура стала выглядить примерно вот так...</h4>
@@ -192,7 +136,7 @@ ALTER TABLE capitals INHERIT cities;
 
             </div>
 
-            <div class="step" data-x="4500" data-y="4300" data-rotate-y="90" data-z="-1100">
+            <div class="step" data-x="7500">
                 <h2>Как это работает?</h2>
                 <div data-jmpress="fade">
                 <small class="remark">Создаем таблицу</small>
@@ -211,10 +155,10 @@ ANALYZE newTableName;</pre>
                 </div>
             </div>
 
-            <div class="step" data-x="4500" data-y="4300" data-rotate-y="90" data-z="-2200">
+            <div class="step" data-x="7500" data-y="800" >
                 <h2>Как это работает?</h2>
                 <div data-jmpress="fade">
-                    <small class="remark">Ищем уже существующую таблицу того же оператора</small>
+                    <small class="remark">Ищем уже существующую таблицу того же тур оператора</small>
                     <pre class="mono prettyprint lang-sql" >SELECT c.relname AS child 
 FROM  pg_inherits 
 JOIN pg_class AS c ON (inhrelid=c.oid) 
@@ -235,7 +179,7 @@ COMMIT;
 
             </div>
 
-            <div class="step" data-x="4500" data-y="4900">
+            <div class="step" data-x="7500" data-y="1600">
                 <h2>И как это поможет?</h2>
                 <div data-jmpress="fade">
                     <small class="remark">Посмотрим на план выполнения запроса</small>
@@ -247,7 +191,7 @@ COMMIT;
                 <h3 class="success" data-jmpress="fade">Profit!</h3>
             </div>
 
-            <div class="step" data-x="4500" data-y="5700">
+            <div class="step" data-x="7500" data-y="2400">
                 <h2>Кроме того</h2>
                 <ul >
                     <li >Не нужны блокировки при вставке новых записей</li>
@@ -258,7 +202,7 @@ COMMIT;
                 </ul>
             </div>
 
-            <div class="step" data-x="4500" data-y="6800">
+            <div class="step" data-x="7500" data-y="3200">
                 <h2>Пара слов о PostgreSQL COPY API</h2>
                 <ul >
                     <li >Предназначено для вставки больших объемов данных</li>
@@ -268,7 +212,35 @@ COMMIT;
                 </ul>
             </div>
 
-            <div class="step" data-x="6000">
+             <div class="step" data-x="7500" data-y="3200" data-z="-1100">
+                <h2>Цифры</h2>
+                 <ul >
+                    <li >В текущей иерархии 98 таблиц</li>
+                    <li data-jmpress="fade">4 параллельных потока</li>
+                    <li data-jmpress="fade">Иморт самого большого файла(13GB) занимает 1 час (раньше не успевал и за сутки)</li>
+                    <li data-jmpress="fade">Среднее время разбора файла - 10-15минут</li>
+                    <li data-jmpress="fade">Практически мгновенный поиск!</li>
+                </ul>
+             </div>
+
+
+            <div class="step" data-x="9000" data-y="0">
+               <h2>Немного о грустном</h2>
+               <h4>Нет автоматической диспетчеризации данных в иерархию, все ручками или...</h4>
+               <h4 data-jmpress="fade">Перенаправление запросов с помощью специальных правил (применимо, только если колонки совпадают, иначе вставка свалится на этапе валидации колонок)</h4>
+            </div>
+
+            <div class="step" data-x="9000" data-y="800">
+                <h2>Целостность данных</h2>
+                <h4>Все вычисляемые и non-null автоматически наследуются дочерними таблицами</h4>
+                <h4>Другие ограничения (уникальность, первичные и внешние ключи) не наследуются => потенциальная проблема</h4>
+            </div>
+
+            <div class="step" data-x="9000" data-y="1600">
+                <center><img src="img/are_you_fucking_kidding_me.jpg"/></center>
+            </div>
+
+            <div class="step" data-x="9000" data-y="1600" data-rotate-y="90">
                 <h2>Меня можно спросить о:</h2>
                     <table class="before-after">
                     <tr>
