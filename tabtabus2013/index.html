@@ -23,8 +23,8 @@
                 <img src="img/TopDogLogo1.png" alt="TopDog Development ltd" style="margin-top: 50px;"/>
                 <br/>
                 <br/>
-                <small style="font-size:14pt;">Докладчик - Андрей Свириденко<br><a href="mailto:asv@topdog.ru.net">asv@topdog.ru.net</a></small><br>
-                <small style="font-size:10pt;">Подельник - Евгений Бабихин<br><a href="mailto:ebabikhin@topdog.ru.net">ebabikhin@topdog.ru.net</a></small>
+                <small style="font-size:18pt;">Докладчик - Андрей Свириденко<br><a href="mailto:asv@topdog.ru.net">asv@topdog.ru.net</a></small><br>
+                <small style="font-size:14pt;">Подельник - Евгений Бабихин<br><a href="mailto:ebabikhin@topdog.ru.net">ebabikhin@topdog.ru.net</a></small>
             </div>
 
             <div class="step" data-x="3000">
@@ -48,7 +48,7 @@
                 <h2>Простым языком</h2>
                 <ul>
                     <li>Есть источник данных</li>
-                    <li data-jmpress="fade">Наш клиент который хочет поиск по этим данным</li>
+                    <li data-jmpress="fade">Клиент хочет поиск по этим данным</li>
                     <li data-jmpress="fade">...</li>
                     <li data-jmpress="fade">И мы...</li>
                 </ul>
@@ -56,7 +56,7 @@
             </div>
 
             <div class="step" data-x="4500" data-y="1600">
-                <h2>Ближе к телу! Кто такие тур операторы?</h2>
+                <h2>Ближе к телу! Кто такие туроператоры?</h2>
                 <small class="remark">Это поставщики каких-либо услуг</small><br>
                 <center><div data-jmpress="fade">
                     <img src="img/suppliers/cosmos.jpg"/>
@@ -145,7 +145,7 @@
                 <div data-jmpress="fade"> <small  class="remark">Разбираем файл</small><br><br></div>
 
                 <div data-jmpress="fade">
-                    <small class="remark">Добавляем индексы, ограничения и анализ</small>
+                    <small class="remark">Добавляем индексы, ограничения, анализируем таблицу</small>
                     <pre class="mono prettyprint lang-sql" >
 CREATE INDEX ...;
 ALTER TABLE newTableName ADD CONSTRAINT newTableName_constraint  
@@ -158,7 +158,7 @@ ANALYZE newTableName;</pre>
             <div class="step" data-x="7500" data-y="800" >
                 <h2>Как это работает?</h2>
                 <div data-jmpress="fade">
-                    <small class="remark">Ищем уже существующую таблицу того же тур оператора</small>
+                    <small class="remark">Ищем уже существующую таблицу того же туроператора</small>
                     <pre class="mono prettyprint lang-sql" >SELECT c.relname AS child 
 FROM  pg_inherits 
 JOIN pg_class AS c ON (inhrelid=c.oid) 
@@ -207,7 +207,8 @@ COMMIT;
                 <ul >
                     <li >Предназначено для вставки больших объемов данных</li>
                     <li data-jmpress="fade">В любом случае работает быстрее, чем INSERT</li>
-                    <li data-jmpress="fade">Требует анализа таблицы после вставки</li>
+                    <li data-jmpress="fade">Требует анализа таблицы после вставки 
+                                        <pre class="mono prettyprint lang-sql" >ANALYZE tableName;</pre></li>
                     <li data-jmpress="fade">Добавляются новые возможности (COPY FREEZE)</li>
                 </ul>
             </div>
@@ -218,7 +219,7 @@ COMMIT;
                     <li >В текущей иерархии 98 таблиц</li>
                     <li data-jmpress="fade">4 параллельных потока</li>
                     <li data-jmpress="fade">Иморт самого большого файла(13GB) занимает 1 час (раньше не успевал и за сутки)</li>
-                    <li data-jmpress="fade">Среднее время разбора файла - 10-15минут</li>
+                    <li data-jmpress="fade">Среднее время разбора файла - 10-15 минут</li>
                     <li data-jmpress="fade">Практически мгновенный поиск!</li>
                 </ul>
              </div>
